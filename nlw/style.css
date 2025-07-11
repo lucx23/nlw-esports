@@ -154,6 +154,32 @@ button:disabled {
     }
 }
 
+.responseContent .error {
+    color: #ff6b6b;
+    background-color: rgba(255, 107, 107, 0.1);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border-left: 4px solid #ff6b6b;
+    margin: 0.5rem 0;
+}
+
+/* Melhorias para mobile */
+@media (max-width: 768px) {
+    form {
+        flex-direction: column;
+    }
+    
+    input, select, button {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
+    
+    #aiResponse {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+}
+
 @media (max-width: 600px) {
     main {
         width: 80.755%;

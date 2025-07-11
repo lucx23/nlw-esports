@@ -45,5 +45,13 @@
 
     <script src="./script.js"></script>
     <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+    <script>
+        // Verificar se showdown carregou
+        window.addEventListener('load', () => {
+            if (typeof showdown === 'undefined') {
+                console.warn('Showdown não carregou. Usando fallback para markdown.');
+            }
+        });
+    </script>
 </body>
 </html>

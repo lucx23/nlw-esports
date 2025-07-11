@@ -7,8 +7,20 @@ const form = document.querySelector('form');
 const aiResponse = document.getElementById('aiResponse');
 
 const markdownConverter = (text) => {
-    const converter = new showdown.Converter();
-    return converter.makeHtml(text);
+    try {
+        if (typeof showdown !== 'undefined') {
+            const converter = new showdown.Converter();
+            return converter.makeHtml(text);
+        } else {
+            // Fallback se showdown não carregar
+            return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                      .replace(/\n/g, '<br>');
+        }
+    } catch (error) {
+        console.error('Erro ao converter markdown:', error);
+        return text.replace(/\n/g, '<br>');
+    }
 } // Variável para converter Markdown em HTML
 
 // apiKey: AIzaSyCSBe3yv4_fBIE94bMJm0300p0_PrOq33c
@@ -73,9 +85,23 @@ const questionIa = async (question, game, apiKey) => {
             contents,
             tools
         })
-    })
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Erro da API:', response.status, errorText);
+        throw new Error(`Erro da API (${response.status}): Verifique sua API Key`);
+    }
 
     const data = await response.json();
+    console.log('Resposta da API:', data);
+    
+    // Verificar se a resposta tem a estrutura esperada
+    if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
+        console.error('Resposta inválida:', data);
+        throw new Error('Resposta inválida da API. Tente novamente.');
+    }
+    
     return data.candidates[0].content.parts[0].text;
 
 }
@@ -97,14 +123,26 @@ const sendForm = async (event) =>{
 
     try {
         //Perguntar para a API da IA
-        const text = await questionIa(question, game, apiKey );
+        const text = await questionIa(question, game, apiKey);
         //Exibir a resposta da IA
-        aiResponse.querySelector(".responseContent").innerHTML = markdownConverter(text);
-        aiResponse.classList.remove("hidden");
+        const responseElement = aiResponse.querySelector(".responseContent");
+        if (responseElement) {
+            responseElement.innerHTML = markdownConverter(text);
+            aiResponse.classList.remove("hidden");
+        } else {
+            throw new Error('Elemento de resposta não encontrado');
+        }
     } catch (error){
-        console.error(`Erro ao enviar a pergunta: ${error}`);
-        aiResponse.textContent = "Ocorreu um erro ao enviar a pergunta. Tente novamente. Se o problema persistir, tente novamente mais tarde.";
-        return;
+        console.error(`Erro ao enviar a pergunta:`, error);
+        
+        // Mostrar erro na interface
+        const responseElement = aiResponse.querySelector(".responseContent");
+        if (responseElement) {
+            responseElement.innerHTML = `<div class="error">❌ ${error.message}</div>`;
+            aiResponse.classList.remove("hidden");
+        } else {
+            alert(`Erro: ${error.message}`);
+        }
     } finally {
         askButton.disabled = false;
         askButton.textContent = "Perguntar";
@@ -113,3 +151,28 @@ const sendForm = async (event) =>{
 }
 
 form.addEventListener("submit", sendForm);
+
+// Debug para mobile - adicionar logs visíveis
+const addDebugLog = (message) => {
+    console.log(message);
+    // Opcional: mostrar logs na interface para debug no mobile
+    if (window.location.search.includes('debug=true')) {
+        const debugDiv = document.getElementById('debug') || (() => {
+            const div = document.createElement('div');
+            div.id = 'debug';
+            div.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#000;color:#0f0;padding:10px;font-size:12px;max-height:200px;overflow-y:auto;z-index:9999;';
+            document.body.appendChild(div);
+            return div;
+        })();
+        debugDiv.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${message}</div>`;
+    }
+};
+
+// Capturar erros não tratados
+window.addEventListener('error', (e) => {
+    addDebugLog(`Erro JS: ${e.message} em ${e.filename}:${e.lineno}`);
+});
+
+window.addEventListener('unhandledrejection', (e) => {
+    addDebugLog(`Promise rejeitada: ${e.reason}`);
+});
