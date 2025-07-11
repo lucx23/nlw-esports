@@ -34,8 +34,9 @@ O layout segue o modelo proposto no bootcamp, com adaptações para integrar a f
 - Copiar
 - Editar
 # Clone o repositório
+<bash>
 git clone https://github.com/seu-usuario/nlw-esports.git
-
+</bash>
 # Abra o arquivo index.html no navegador
 Para utilizar a funcionalidade de IA:
 
