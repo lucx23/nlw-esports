@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLW Esports</title>
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Oswald:wght@200..700&family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <img src="assets/logo.png" alt="Logo do Projeto NLW Esports">
+    </header>
+
+    <main id="content">
+        <section>
+            <div>
+                <h2>Assistente de Meta</h2>
+                <p>Pergunte sobre metas de jogo, estratégias ou dicas para melhorar seu desempenho!</p>
+
+                <form id="form">
+                    <input type="password" placeholder="Informe a API Key do Gemini" id="apiKey" required>
+                    <select name="" id="gameSelect">
+                        <option value="">Selecione um Jogo</option>
+                        <option value="Valorant">Valorant</option>
+                        <option value="League of Legends">League of Legends</option>
+                        <option value="CS:GO">CS:GO</option>
+                        <option value="Free Fire">Free Fire</option>
+                        <option value="Fortnite">Fortnite</option>
+                        <option value="PUBG Mobile">PUBG Mobile</option>
+                    </select>
+
+                    <input type="text" placeholder="Ex: Melhor build para ADC ...." id="questionInput" required>
+                    <button id="askButton">Perguntar</button>
+                </form>
+
+                <div id="aiResponse" class="hidden">
+                    <div class="responseContent">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="./script.js"></script>
+    <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+    <script>
+        // Verificar se showdown carregou
+        window.addEventListener('load', () => {
+            if (typeof showdown === 'undefined') {
+                console.warn('Showdown não carregou. Usando fallback para markdown.');
+            }
+        });
+    </script>
+</body>
+</html>
