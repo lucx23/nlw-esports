@@ -33,11 +33,11 @@ O layout segue o modelo proposto no bootcamp, com adaptações para integrar a f
 - bash
 - Copiar
 - Editar
-# Clone o repositório
+### Clone o repositório
 <bash>
 git clone https://github.com/seu-usuario/nlw-esports.git
-</bash>
-# Abra o arquivo index.html no navegador
+  
+### Abra o arquivo index.html no navegador
 Para utilizar a funcionalidade de IA:
 
 Insira sua chave da API Gemini no local apropriado do código (API_KEY).
