@@ -1,7 +1,7 @@
 # nlw Esports 🎮
 Projeto desenvolvido durante o bootcamp NLW Esports da Rocketseat, com o objetivo de praticar HTML, CSS e JavaScript, integrando também uma API de IA (Gemini) para responder perguntas relacionadas a metas e dicas de jogos como Valorant, CS:GO, League of Legends, Free Fire, entre outros.
 
-##💡 Sobre o projeto
+## 💡 Sobre o projeto
 O nlw Esports é um site onde o usuário pode enviar perguntas relacionadas a metas de diversos jogos populares. As respostas são geradas automaticamente por meio da integração com a API da IA Gemini, trazendo dicas, estratégias e informações para quem deseja melhorar seu desempenho nos games.
 
 - Jogos abordados:
@@ -15,7 +15,7 @@ O nlw Esports é um site onde o usuário pode enviar perguntas relacionadas a me
 
 - Outros
 
-##🚀 Tecnologias utilizadas:
+## 🚀 Tecnologias utilizadas:
 - HTML5
 
 - CSS3
